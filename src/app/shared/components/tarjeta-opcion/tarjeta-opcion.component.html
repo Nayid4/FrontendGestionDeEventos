@@ -1,0 +1,9 @@
+<div
+    class="cursor-pointer flex flex-col bg-letra-blanca p-5 rounded-lg gap-5 w-80 max-w-80 h-80 max-h-80 min-w-52
+            justify-between shadow-md"
+    [routerLink]="info.ruta"
+>
+    <span class="text-center text-2xl font-semibold">{{ info.titulo }}</span>
+    <i class="{{ info.icono}} text-letra-gris-oscuro text-center text-9xl"></i>
+    <p class="text-center text-sm">{{ info.descripcion }}</p>
+</div>
