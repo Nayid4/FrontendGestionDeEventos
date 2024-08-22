@@ -28,7 +28,7 @@
           >
             <option value="">Todas las categorías</option>
             @for (categoria of Categorias; track categoria) {
-                <option value="categoria">{{categoria}}</option>
+                <option [value]="categoria">{{categoria}}</option>
             }
           </select>
         </label>
