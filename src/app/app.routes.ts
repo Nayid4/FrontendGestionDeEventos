@@ -7,11 +7,11 @@ export const routes: Routes = [
         component: InicioComponent
     },
     {
-        path: 'usuario',
+        path: 'usuarios',
         loadChildren: () => import('./pages/usuario/usuario.routes').then(m => m.USUARIO_ROUTES)
     },
     {
-        path: 'evento',
+        path: 'eventos',
         loadChildren: () => import('./pages/eventos/evento.routes').then(m => m.EVENTO_ROUTES)
     },
     {

@@ -15,14 +15,14 @@ export class InicioComponent {
       id: 1,
       titulo: "Usuarios",
       icono: "pi pi-user",
-      ruta: "/usuario",
+      ruta: "/usuarios",
       descripcion: "Gestiona Usuarios"
     },
     {
       id: 2,
       titulo: "Eventos",
       icono: "pi pi-calendar",
-      ruta: "/evento",
+      ruta: "/eventos",
       descripcion: "Gestiona Eventos",
     }
   ]

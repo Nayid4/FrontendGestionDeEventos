@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { Usuario } from '../../../core/models/usuario.model';
 import { RouterModule } from '@angular/router';
@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { BuscarUsuarioPipe } from '../../../shared/pipes/buscar-usuario.pipe';
 import { TarjetaUsuarioComponent } from '../../../shared/components/tarjeta-usuario/tarjeta-usuario.component';
+import { NotificacionEvento } from '../../../core/models/notificacionEvento.model';
 
 @Component({
   selector: 'app-lista-usuario',
@@ -37,7 +38,7 @@ export class ListaUsuarioComponent implements OnInit{
   listaUsuario: Usuario[] = []
   busqueda: string = '';
 
-  constructor(private servicioUsuario: UsuarioService){}
+  constructor(private servicioUsuario: UsuarioService, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.servicioUsuario.ListarTodos().subscribe({
@@ -45,6 +46,13 @@ export class ListaUsuarioComponent implements OnInit{
         this.listaUsuario = usuarios
       }
     })
+  }
+
+  notificacion(evento: NotificacionEvento): void {
+    if (evento.estado) {
+      this.listaUsuario = this.listaUsuario.filter(usuario => usuario.id !== evento.id);
+      this.cdr.detectChanges();
+    }
   }
 
 }

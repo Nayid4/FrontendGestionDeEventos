@@ -8,16 +8,17 @@
                 </div>
     
                 <a 
-                    [routerLink]="'/usuario/registrar-usuario'"
+                    [routerLink]="'/usuarios/registrar-usuario'"
                     class="px-5 py-2 cursor-pointer hover:bg-fondo-verde-old text-lg bg-fondo-verde text-letra-blanca font-semibold border-none rounded-md"
                 >
                     Registrar
                 </a>
             </div>
         </div>
-        <div class="w-full flex flex-col gap-4 overflow-auto h-full">
+        <div class="w-full flex flex-col gap-4 overflow-x-auto h-full">
             @for (usuario of listaUsuario | buscarUsuario: busqueda; track usuario.id) {
-                <app-tarjeta-usuario [usuario]="usuario"></app-tarjeta-usuario>
+                <app-tarjeta-usuario (notificacion)="notificacion($event)" [usuario]="usuario"></app-tarjeta-usuario>
+
             }@empty {
                 <h2 class="text-center">No se encontraron usuarios</h2>
             }
