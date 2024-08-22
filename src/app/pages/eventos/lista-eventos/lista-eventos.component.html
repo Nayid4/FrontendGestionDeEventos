@@ -1,27 +1,108 @@
 <div class="h-svh w-svw p-4 bg-letra-gris-claro flex justify-center items-center">
-    <div class="container gap-4 bg-fondo-blanco p-5 rounded-xl shadow-md h-5/6 flex flex-col">
-        <div class="">
-            <div class="flex gap-2 items-center">
+    <div class="container bg-fondo-blanco p-6 rounded-xl shadow-md h-5/6 flex flex-col gap-6">
+        <!-- Filtros y botones -->
+        <div class="grid grid-cols-2 gap-6">
+            <!-- Búsqueda y categoría -->
+            <div class="flex flex-col gap-4">
                 <div class="relative w-full flex items-center">
                     <i class="pi pi-search absolute left-3 text-letra-gris-medio"></i>
-                    <input [(ngModel)]="busqueda" class="w-full pl-10 p-2 border border-letra-gris-medio rounded-md focus:outline-none focus:ring-1 focus:ring-fondo-verde focus:border-transparent" type="text" pInputText placeholder="Buscar evento" />
+                    <input 
+                        [(ngModel)]="busqueda" 
+                        class="w-full pl-10 p-2 border border-letra-gris-medio rounded-md focus:outline-none focus:ring-1 focus:ring-fondo-verde focus:border-transparent" 
+                        type="text" 
+                        pInputText 
+                        placeholder="Buscar evento" 
+                    />
                 </div>
-    
-                <a 
-                    [routerLink]="'/eventos/registrar-evento'"
-                    class="px-4 py-2 cursor-pointer text-nowrap hover:bg-fondo-verde-old text-lg bg-fondo-verde text-letra-blanca font-semibold border-none rounded-md"
+
+                <select 
+                    [(ngModel)]="categoriaSeleccionada" 
+                    (change)="filtrarPorCategoria()" 
+                    class="w-full border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none"
                 >
-                    Registrar Evento
-                </a>
+                    <option value="">Todas las categorías</option>
+                    <option value="Conferencias y Seminarios">Conferencias y Seminarios</option>
+                    <option value="Talleres y Entrenamientos">Talleres y Entrenamientos</option>
+                    <option value="Conciertos y Festivales">Conciertos y Festivales</option>
+                    <option value="Ferias y Exposiciones">Ferias y Exposiciones</option>
+                    <option value="Eventos Deportivos">Eventos Deportivos</option>
+                    <option value="Eventos de Networking">Eventos de Networking</option>
+                    <option value="Festividades y Celebraciones">Festividades y Celebraciones</option>
+                    <option value="Eventos Culturales y Artísticos">Eventos Culturales y Artísticos</option>
+                    <option value="Conferencias de Tecnología">Conferencias de Tecnología</option>
+                    <option value="Eventos de Beneficencia">Eventos de Beneficencia</option>
+                    <option value="Eventos Gastronómicos">Eventos Gastronómicos</option>
+                    <option value="Charlas Motivacionales">Charlas Motivacionales</option>
+                </select>
+            </div>
+
+            <!-- Fechas y acciones -->
+            <div class="flex flex-col gap-4">
+                <!-- Picker de fecha única -->
+                <label class="font-semibold text-letra-gris-oscuro">Filtrar por Fecha:
+                    <input 
+                    [(ngModel)]="fechaSeleccionada" 
+                    (change)="filtrarPorFecha()" 
+                    type="date" 
+                    class="w-full border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none"
+                    />
+                </label>
+                
+                
+                <!-- Rango de fechas -->
+                <label class="font-semibold text-letra-gris-oscuro">Filtrar por Rango de Fechas:</label>
+                <div class="flex gap-2">
+                    <input 
+                        [(ngModel)]="fechaInicio" 
+                        type="date" 
+                        class="w-1/2 border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none" 
+                        placeholder="Fecha Inicio"
+                    />
+                    <input 
+                        [(ngModel)]="fechaFin" 
+                        type="date" 
+                        class="w-1/2 border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none" 
+                        placeholder="Fecha Fin"
+                    />
+                </div>
             </div>
         </div>
+
+        <!-- Botones de acción -->
+        <div class="flex gap-4 justify-between">
+            <button 
+                (click)="filtrarPorRangoDeFechas()" 
+                class="px-4 py-2 bg-fondo-verde text-letra-blanca font-semibold rounded-md w-full"
+            >
+                Filtrar por Rango
+            </button>
+            <button 
+                (click)="listarProximosEventos()" 
+                class="px-4 py-2 bg-fondo-verde text-letra-blanca font-semibold rounded-md w-full"
+            >
+                Próximos Eventos
+            </button>
+            <button 
+                (click)="limpiarFiltros()" 
+                class="px-4 py-2 bg-color-rojo text-letra-blanca font-semibold rounded-md w-full"
+            >
+                Limpiar Filtros
+            </button>
+            <a 
+                [routerLink]="'/eventos/registrar-evento'"
+                class="px-4 py-2 cursor-pointer hover:bg-fondo-verde-old text-lg bg-fondo-verde text-letra-blanca font-semibold rounded-md w-full text-center"
+            >
+                Registrar Evento
+            </a>
+        </div>
+
+        <!-- Lista de eventos -->
         <div class="w-full flex flex-col gap-4 overflow-x-auto h-full">
             @for (evento of listaEvento | buscarEvento: busqueda; track evento?.id) {
                 <app-tarjeta-evento (notificacion)="notificacion($event)" [evento]="evento!"></app-tarjeta-evento>
             }@empty {
-                <h2 class="text-center">No se encontraron usuarios</h2>
+                <h2 class="text-center">No se encontraron eventos</h2>
             }
-            
         </div>
     </div>
 </div>

@@ -76,13 +76,18 @@ export class FormularioEventosComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formulario.valid) {
-      const comandoEvento: Evento = this.formulario.value;
+      const comandoEvento: Evento = {
+        ...this.formulario.value,
+        id: this.eventoId || undefined // Asigna la ID si está presente
+      };
       if (this.eventoId) {
         this.eventoService.Actualizar(this.eventoId, comandoEvento).subscribe(() => {
+          this.servicioMensaje.add({ severity: 'success', summary: 'Éxito', detail: 'Evento actualizado correctamente!' });
           this.router.navigate(['/eventos']);
         });
       } else {
         this.eventoService.Crear(comandoEvento).subscribe(() => {
+          this.servicioMensaje.add({ severity: 'success', summary: 'Éxito', detail: 'Evento registrado correctamente!' });
           this.router.navigate(['/eventos']);
         });
       }
@@ -91,11 +96,10 @@ export class FormularioEventosComponent implements OnInit {
 
   cancelar(): void {
     if (this.eventoId) {
-      this.servicioMensaje.add({ severity: 'info', summary: 'Info', detail: 'Actualización de usuario cancelada!' });
+      this.servicioMensaje.add({ severity: 'info', summary: 'Info', detail: 'Actualización de evento cancelada!' });
     } else {
-      this.servicioMensaje.add({ severity: 'info', summary: 'Info', detail: 'Registro de usuario cancelado!' });
+      this.servicioMensaje.add({ severity: 'info', summary: 'Info', detail: 'Registro de evento cancelado!' });
     }
-    this.router.navigate(['/usuarios']);
+    this.router.navigate(['/eventos']);
   }
 }
-
