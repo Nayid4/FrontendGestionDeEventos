@@ -66,16 +66,22 @@ export class ListaEventosComponent implements OnInit {
   }
 
   filtrarPorCategoria(): void {
+    console.log('Categoria Seleccionada:', this.categoriaSeleccionada);
     if (this.categoriaSeleccionada) {
       this.servicioEvento.filtrarPorCategoria(this.categoriaSeleccionada).subscribe({
         next: (eventos: Evento[]) => {
+          console.log('Eventos Filtrados:', eventos);
           this.listaEvento = eventos;
+        },
+        error: (error) => {
+          console.error('Error al filtrar por categoría:', error);
         }
       });
     } else {
       this.cargarEventos();
     }
   }
+  
 
   filtrarPorFecha(): void {
     if (this.fechaSeleccionada) {

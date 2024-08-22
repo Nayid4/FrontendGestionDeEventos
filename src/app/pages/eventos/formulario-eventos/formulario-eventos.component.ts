@@ -147,6 +147,8 @@ export class FormularioEventosComponent implements OnInit {
             asistentes: this.asistentes.map(asistente => ({ id: asistente.id })) // Convertir usuarios a comandoAsistente
           };
 
+          console.log(comandoEvento);
+
           if (this.eventoId) {
             this.eventoService.ActualizarEvento(this.eventoId, comandoEvento).subscribe(() => {
               this.router.navigate(['/eventos']);
