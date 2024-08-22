@@ -22,7 +22,7 @@ export class InicioComponent {
       id: 2,
       titulo: "Eventos",
       icono: "pi pi-calendar",
-      ruta: "/inicio",
+      ruta: "/evento",
       descripcion: "Gestiona Eventos",
     }
   ]
