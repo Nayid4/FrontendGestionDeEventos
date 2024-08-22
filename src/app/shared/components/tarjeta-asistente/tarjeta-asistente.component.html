@@ -1,0 +1,17 @@
+<div class="w-full flex gap-4 p-4 bg-fondo-blanco shadow-md items-center border-1 rounded-md border-letra-gris-claro">
+    <li class="pi pi-user text-4xl"></li>
+
+    <div class="w-60">
+        <h2 class="text-lg">{{usuario.nombre+" "+usuario.apellido}}</h2>
+        <span class="text-letra-gris-oscuro text-md">{{usuario.correo}}</span>
+    </div>
+
+    <div class="flex gap-1 justify-center">
+        
+        <button (click)="EliminarUsuario(usuario)">
+            <i 
+            class="pi pi-trash text-lg hover:bg-color-rojo hover:text-letra-blanca p-2 rounded-full"
+            ></i>
+        </button>
+    </div>
+</div>

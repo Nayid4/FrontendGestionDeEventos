@@ -14,6 +14,10 @@ export class EventoService extends GenericoService<Evento, ComandoEvento> {
     this.endpoint = "eventos";
   }
 
+  ActualizarEvento(id: string, datos: ComandoEvento): Observable<void>{
+    return this.http.put<void>(`${this.api}/${this.endpoint}/${id}`, datos);
+  }
+
   filtrarPorCategoria(categoria: string): Observable<Evento[]> {
     return this.http.get<Evento[]>(`${this.api}/${this.endpoint}/listar-por-categoria/${categoria}`);
   }

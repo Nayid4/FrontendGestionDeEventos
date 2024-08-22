@@ -1,1 +1,17 @@
-<p>tarjeta-evento works!</p>
+<div class="w-full flex gap-4 p-4 bg-fondo-blanco shadow-md items-center border-1 rounded-md border-letra-gris-claro">
+    <li class="pi pi-calendar text-4xl"></li>
+
+    <div class="w-full">
+        <h2 class="text-xl">{{evento.titulo}}</h2>
+        <span class="text-letra-gris-oscuro text-md">{{evento.fecha | date:'shortDate'}} - {{evento.horaInicio}} - {{evento.horaFin}}</span>
+    </div>
+
+    <div class="flex gap-1 justify-center">
+        <button (click)="ActualizarEvento(evento)">
+            <i class="pi pi-pencil text-lg hover:bg-fondo-verde hover:text-letra-blanca p-2 rounded-full"></i>
+        </button>
+        <button (click)="EliminarEvento(evento)">
+            <i class="pi pi-trash text-lg hover:bg-color-rojo hover:text-letra-blanca p-2 rounded-full"></i>
+        </button>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { comandoUsuario, Usuario } from '../../../core/models/usuario.model';
 import { UsuarioService } from '../../../core/services/usuario.service';
 
@@ -13,6 +13,7 @@ import { UsuarioService } from '../../../core/services/usuario.service';
   imports: [
     FormsModule,
     ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class FormularioUsuarioComponent implements OnInit {
@@ -27,7 +28,8 @@ export class FormularioUsuarioComponent implements OnInit {
     private servicioUsuario: UsuarioService,
     private fb: FormBuilder,
     private router: Router,
-    private servicioMensaje: MessageService
+    private servicioMensaje: MessageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +68,10 @@ export class FormularioUsuarioComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formulario.valid) {
-      const datos = this.formulario.value;
+      this.confirmationService.confirm({
+        message: `¿Está seguro de que desea ${this.textoConfirmar.toLowerCase()} este evento?`,
+        accept: () => {
+          const datos = this.formulario.value;
 
       if (this.id) {
         const datosFormulario: Usuario = {
@@ -100,6 +105,12 @@ export class FormularioUsuarioComponent implements OnInit {
           }
         });
       }
+      },
+        reject: () => {
+          this.servicioMensaje.add({ severity: 'info', summary: 'Info', detail: 'Acción cancelada' });
+        }
+      });
+      
     } else {
       this.servicioMensaje.add({ severity: 'error', summary: 'Error', detail: 'Por favor completa todos los campos!' });
     }
