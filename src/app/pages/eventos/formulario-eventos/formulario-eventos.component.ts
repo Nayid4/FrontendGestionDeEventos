@@ -4,12 +4,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Evento, ComandoEvento } from '../../../core/models/evento.model';
 import { EventoService } from '../../../core/services/evento.service';
 import { Usuario } from '../../../core/models/usuario.model';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { categorias } from '../../../assets/categorias.json'
 import { TarjetaAsistenteComponent } from '../../../shared/components/tarjeta-asistente/tarjeta-asistente.component';
 import { NotificacionEvento } from '../../../core/models/notificacionEvento.model';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-formulario-eventos',
@@ -18,7 +19,8 @@ import { NotificacionEvento } from '../../../core/models/notificacionEvento.mode
     FormsModule,
     ReactiveFormsModule,
     TarjetaAsistenteComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ConfirmDialogModule
   ],
   templateUrl: './formulario-eventos.component.html',
   styleUrls: ['./formulario-eventos.component.css']
@@ -39,7 +41,8 @@ export class FormularioEventosComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private servicioMensaje: MessageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -121,6 +124,7 @@ export class FormularioEventosComponent implements OnInit {
     }else{
       this.servicioMensaje.add({ severity: 'info', summary: 'Info', detail: "Seleccione un asistente!" });
     }
+    
   }
 
   eliminarAsistente(evento: NotificacionEvento): void {
@@ -132,29 +136,34 @@ export class FormularioEventosComponent implements OnInit {
   }
 
   onSubmit(): void {
+    
     if (this.formulario.valid) {
-      const comandoEvento: ComandoEvento = {
-        ...this.formulario.value,
-        id: this.eventoId,
-        asistentes: this.asistentes.map(asistente => ({ id: asistente.id })) // Convertir usuarios a comandoAsistente
-      };
-      
+      this.confirmationService.confirm({
+        message: `¿Está seguro de que desea ${this.textoConfirmar.toLowerCase()} este evento?`,
+        accept: () => {
+          const comandoEvento: ComandoEvento = {
+            ...this.formulario.value,
+            id: this.eventoId,
+            asistentes: this.asistentes.map(asistente => ({ id: asistente.id })) // Convertir usuarios a comandoAsistente
+          };
 
-      if (this.eventoId) {
-        console.log(comandoEvento);
-        console.log(this.eventoId);
-
-        this.eventoService.ActualizarEvento(this.eventoId, comandoEvento).subscribe(() => {
-          this.router.navigate(['/eventos']);
-          this.servicioMensaje.add({ severity: 'success', summary: 'Éxito', detail: 'Evento actualizado correctamente' });
-        });
-      } else {
-        this.eventoService.Crear(comandoEvento).subscribe(() => {
-          this.router.navigate(['/eventos']);
-          this.servicioMensaje.add({ severity: 'success', summary: 'Éxito', detail: 'Evento registrado correctamente' });
-        });
-      }
-    }else{
+          if (this.eventoId) {
+            this.eventoService.ActualizarEvento(this.eventoId, comandoEvento).subscribe(() => {
+              this.router.navigate(['/eventos']);
+              this.servicioMensaje.add({ severity: 'success', summary: 'Éxito', detail: 'Evento actualizado correctamente' });
+            });
+          } else {
+            this.eventoService.Crear(comandoEvento).subscribe(() => {
+              this.router.navigate(['/eventos']);
+              this.servicioMensaje.add({ severity: 'success', summary: 'Éxito', detail: 'Evento registrado correctamente' });
+            });
+          }
+        },
+        reject: () => {
+          this.servicioMensaje.add({ severity: 'info', summary: 'Info', detail: 'Acción cancelada' });
+        }
+      });
+    } else {
       this.servicioMensaje.add({ severity: 'error', summary: 'Error', detail: 'Completa los campos!' });
     }
   }
