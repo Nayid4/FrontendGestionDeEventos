@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { comandoUsuario, Usuario } from '../../../core/models/usuario.model';
@@ -13,6 +13,7 @@ import { UsuarioService } from '../../../core/services/usuario.service';
   imports: [
     FormsModule,
     ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class FormularioUsuarioComponent implements OnInit {

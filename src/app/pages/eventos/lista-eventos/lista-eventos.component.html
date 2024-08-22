@@ -1,4 +1,19 @@
-<div class="h-svh w-svw p-4 bg-letra-gris-claro flex justify-center items-center">
+<div class="h-svh w-svw p-4 bg-letra-gris-claro flex flex-col gap-5 justify-center items-center">
+    <div class="container">
+        <div class="flex items-center gap-1 cursor-pointer"
+            [routerLink]="['/']"
+        >
+            <a 
+                
+                class=" py-1 px-2 rounded-md bg-letra-blanca text-letra-negra text-lg shadow-sm border-none"
+            >
+                <i class="pi pi-arrow-left"></i>
+                
+            </a>
+            <span class="text-letra-gris-oscuro font-medium">Volver</span>
+        </div>
+        
+      </div> 
     <div class="container bg-fondo-blanco p-6 rounded-xl shadow-md h-5/6 flex flex-col gap-6">
         <!-- Filtros y botones -->
         <div class="grid grid-cols-2 gap-6">
@@ -14,6 +29,20 @@
                         placeholder="Buscar evento" 
                     />
                 </div>
+
+                <!-- Picker de fecha única -->
+                <label class="font-semibold text-letra-gris-oscuro">Filtrar por Fecha:
+                    <input 
+                    [(ngModel)]="fechaSeleccionada" 
+                    (change)="filtrarPorFecha()" 
+                    type="date" 
+                    class="w-full border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none"
+                    />
+                </label>
+            </div>
+
+            <!-- Fechas y acciones -->
+            <div class="flex flex-col gap-4">
 
                 <select 
                     [(ngModel)]="categoriaSeleccionada" 
@@ -34,37 +63,27 @@
                     <option value="Eventos Gastronómicos">Eventos Gastronómicos</option>
                     <option value="Charlas Motivacionales">Charlas Motivacionales</option>
                 </select>
-            </div>
 
-            <!-- Fechas y acciones -->
-            <div class="flex flex-col gap-4">
-                <!-- Picker de fecha única -->
-                <label class="font-semibold text-letra-gris-oscuro">Filtrar por Fecha:
-                    <input 
-                    [(ngModel)]="fechaSeleccionada" 
-                    (change)="filtrarPorFecha()" 
-                    type="date" 
-                    class="w-full border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none"
-                    />
-                </label>
-                
                 
                 <!-- Rango de fechas -->
-                <label class="font-semibold text-letra-gris-oscuro">Filtrar por Rango de Fechas:</label>
-                <div class="flex gap-2">
-                    <input 
-                        [(ngModel)]="fechaInicio" 
-                        type="date" 
-                        class="w-1/2 border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none" 
-                        placeholder="Fecha Inicio"
-                    />
-                    <input 
-                        [(ngModel)]="fechaFin" 
-                        type="date" 
-                        class="w-1/2 border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none" 
-                        placeholder="Fecha Fin"
-                    />
-                </div>
+                <label class="font-semibold text-letra-gris-oscuro">
+                    Filtrar por Rango de Fechas:
+                    <div class="flex gap-2">
+                        <input 
+                            [(ngModel)]="fechaInicio" 
+                            type="date" 
+                            class="w-1/2 border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none" 
+                            placeholder="Fecha Inicio"
+                        />
+                        <input 
+                            [(ngModel)]="fechaFin" 
+                            type="date" 
+                            class="w-1/2 border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none" 
+                            placeholder="Fecha Fin"
+                        />
+                    </div>
+                </label>
+                
             </div>
         </div>
 
@@ -72,19 +91,19 @@
         <div class="flex gap-4 justify-between">
             <button 
                 (click)="filtrarPorRangoDeFechas()" 
-                class="px-4 py-2 bg-fondo-verde text-letra-blanca font-semibold rounded-md w-full"
+                class="px-4 py-2 bg-fondo-verde hover:bg-fondo-verde-old text-letra-blanca font-semibold rounded-md w-full"
             >
                 Filtrar por Rango
             </button>
             <button 
                 (click)="listarProximosEventos()" 
-                class="px-4 py-2 bg-fondo-verde text-letra-blanca font-semibold rounded-md w-full"
+                class="px-4 py-2 bg-fondo-verde hover:bg-fondo-verde-old text-letra-blanca font-semibold rounded-md w-full"
             >
                 Próximos Eventos
             </button>
             <button 
                 (click)="limpiarFiltros()" 
-                class="px-4 py-2 bg-color-rojo text-letra-blanca font-semibold rounded-md w-full"
+                class="px-4 py-2 bg-color-rojo hover:opacity-50 text-letra-blanca font-semibold rounded-md w-full"
             >
                 Limpiar Filtros
             </button>
