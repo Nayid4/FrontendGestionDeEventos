@@ -14,6 +14,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { BuscarEventoPipe } from '../../../shared/pipes/buscar-evento.pipe';
 import { TarjetaEventoComponent } from '../../../shared/components/tarjeta-evento/tarjeta-evento.component';
 import { NotificacionEvento } from '../../../core/models/notificacionEvento.model';
+import { categorias } from '../../../assets/categorias.json'
 
 @Component({
   selector: 'app-lista-evento',
@@ -42,12 +43,18 @@ export class ListaEventosComponent implements OnInit {
   fechaSeleccionada: string = '';
   fechaInicio: string = '';
   fechaFin: string = '';
-  ordenAscendente: boolean = true;
 
   constructor(private servicioEvento: EventoService, private cdr: ChangeDetectorRef) {}
 
+  Categorias!: string[]
+
   ngOnInit(): void {
     this.cargarEventos();
+    this.cargarCategorias();
+  }
+
+  cargarCategorias(){
+    this.Categorias = categorias
   }
 
   cargarEventos(): void {

@@ -50,18 +50,9 @@
                     class="w-full border border-letra-gris-medio rounded-md px-2 py-2 focus:outline-none"
                 >
                     <option value="">Todas las categorías</option>
-                    <option value="Conferencias y Seminarios">Conferencias y Seminarios</option>
-                    <option value="Talleres y Entrenamientos">Talleres y Entrenamientos</option>
-                    <option value="Conciertos y Festivales">Conciertos y Festivales</option>
-                    <option value="Ferias y Exposiciones">Ferias y Exposiciones</option>
-                    <option value="Eventos Deportivos">Eventos Deportivos</option>
-                    <option value="Eventos de Networking">Eventos de Networking</option>
-                    <option value="Festividades y Celebraciones">Festividades y Celebraciones</option>
-                    <option value="Eventos Culturales y Artísticos">Eventos Culturales y Artísticos</option>
-                    <option value="Conferencias de Tecnología">Conferencias de Tecnología</option>
-                    <option value="Eventos de Beneficencia">Eventos de Beneficencia</option>
-                    <option value="Eventos Gastronómicos">Eventos Gastronómicos</option>
-                    <option value="Charlas Motivacionales">Charlas Motivacionales</option>
+                    @for (categoria of Categorias; track categoria) {
+                        <option value="categoria">{{categoria}}</option>
+                    }
                 </select>
 
                 

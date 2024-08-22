@@ -15,6 +15,7 @@ export interface Evento {
 }
 
 export interface ComandoEvento {
+    id?: string,
     titulo: string;
     categoria: string;
     descripcion: string;
