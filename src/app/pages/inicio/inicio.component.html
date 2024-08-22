@@ -1,1 +1,5 @@
-<p>inicio works!</p>
+<div class="w-full h-screen bg-letra-gris-claro flex justify-center content-center gap-5 items-center flex-wrap p-5">
+    @for (opcion of listaOpciones; track opcion.id) {
+        <app-tarjeta-opcion [info]="opcion" />
+    }
+</div>

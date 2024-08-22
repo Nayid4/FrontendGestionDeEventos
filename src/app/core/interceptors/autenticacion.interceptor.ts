@@ -6,7 +6,6 @@ import { MessageService } from 'primeng/api';
 import { ProblemDetails } from '../models/problemDetails.model'; 
 
 export const autenticacionInterceptor: HttpInterceptorFn = (req, next) => {
-  const ruta = inject(Router);
   const servicioMensajes = inject(MessageService);
 
   console.log(req.url);
